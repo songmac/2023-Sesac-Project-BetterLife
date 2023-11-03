@@ -14,7 +14,7 @@
    - 지자체별 운동 프로그램 활성화 및 정보 제공을 위한 추천 시스템 개발 및 GUI 구성을 통해 접근성을 높임.
      
 2. 분석과정 개요
-   ![image](https://github.com/songmac/2023-Sesac-Project-Silver/assets/113491089/cbd0c65b-6e02-47e6-a95d-24696dc197a9)
+   - ![image](https://github.com/songmac/2023-Sesac-Project-Silver/assets/113491089/cbd0c65b-6e02-47e6-a95d-24696dc197a9)
 4. 분석
    1) 데이터 정의 : 특화된 샘플 데이터가 아닌 공공데이터를 활용하여 샘플의 표준화 및 정규화
    2) 데이터 전처리
