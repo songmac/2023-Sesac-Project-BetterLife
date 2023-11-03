@@ -11,7 +11,7 @@
    - 분석 배경 : 국민연금 고갈, 건강보험료 증가 등 고령인구 증가로 인한 의료비 지출 증가. 또한 건강관리에 대한 관심도 증가로 인한 치료 -> 예방 중심 헬스케어 사회로 변화.
    - 디지털 기술이 접목되어 기술의 활용도가 증가했으나, 디지털 리터러시 격차가 존재. 자세히는 건강 관리 관련 정보에 대한 접근이 젊은 인구에 한정적이고 고령인구에는 제한적이라는 문제점 존재.
    - 지자체별 운동 프로그램 활성화 및 정보 제공을 위한 추천 시스템 개발 및 GUI 구성을 통해 접근성을 높임.
-   - 분석 목적 : 서울 시민들에게 구별로 운영되고 있는 운동-건강-문화 프로그램 사용자 등록 현황을 파악&분석하고 이를 대시보드화하여 등록 가능한 프로그램을 추천할 수 있도록 함.
+   - 분석 목적 : 서울 시민들에게 구별로 운영되고 있는 운동-건강 프로그램 사용자 등록 현황을 파악&분석하고 이를 대시보드화하여 등록 가능한 프로그램을 추천할 수 있도록 함.
      
 2. 분석과정 개요 (draft)
    - ![image](https://github.com/songmac/2023-Sesac-Project-Silver/assets/113491089/cbd0c65b-6e02-47e6-a95d-24696dc197a9)
@@ -20,7 +20,7 @@
    2) 데이터 전처리 : SQL 사용하여 데이터 추출, ERD를 통한 Mart Table 생성
    3) 데이터 시각화 : tableau 사용
    4) 데이터 정규화(key값) : 연령, 성별, 질병정보 등
-   5) 데이터 모델링
+   5) 데이터 모델링 : 오픈 API, 추천시스템
    6) 데이터 예측 : A/B 테스트 설계
       
 4. 활용방안
@@ -54,21 +54,6 @@ def fetch_data_from_api():
 data = fetch_data_from_api()
 
 if data:
-
-
-## 자연어처리 모델링
-from transformers import pipeline
-
-nlp = pipeline("sentiment-analysis")
-
-text = "이 영화는 정말로 멋집니다!"
-
-results = nlp(text)
-
-for result in results:
-    label = result['label']
-    score = result['score']
-    print(f"감정: {label}, 점수: {score}")
 
 
 ## 추천시스템 
