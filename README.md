@@ -1,3 +1,16 @@
+## COMMIT 규칙
+#### ❗ 영어로만 작성
+#### ❗ 각자 branch에 업로드 하면, main(only)에서 approve 후 merge 가능
+- 예시
+   |
+   |
+    ㅡ * ex. new : Training.py : common data set
+   |
+    ㅡ * ex. update : Test.py : revision lines for managing error
+   |
+    ㅡ * ex. delete : Recommendation.py : draft file
+
+
 ## CODE
 #### ❗ 영어로만 작성
 #### 폴더&파일명 형식
@@ -16,14 +29,6 @@
     * ex. 2022_서울시_열린데이터_인구통계.csv
     * ex. 2023_서울시_빅데이터허브_만족도조사.csv
       
-
-## COMMIT 규칙
-#### ❗ 영어로만 작성
-#### ❗ 각자 branch에 업로드 하면, main(only)에서 approve 후 merge 가능
-- 예시
-    * ex. new : Training.py : common data set
-    * ex. update : Test.py : revision lines for managing error
-    * ex. delete : Recommendation.py : draft file
 
 
 ## 기타
