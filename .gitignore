@@ -4,6 +4,7 @@
 *.xlsx
 *.zip
 *.exe
+*.ipynb
 
 #git 폴더
 data/
