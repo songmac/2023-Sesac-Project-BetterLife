@@ -7,7 +7,7 @@
 
 #git 폴더
 data/
-__pycache__
+__pycache__/
 
 #apiKey를 숨기기 위하여 리스트에 추가
 .env
