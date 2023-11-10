@@ -5,6 +5,7 @@
 *.zip
 *.exe
 *.ipynb
+dahee/ignore/
 
 #git 폴더
 data/
