@@ -9,6 +9,7 @@ dahee/ignore/
 
 #git 폴더
 data/
+module/__pycahe__/
 
 #apiKey를 숨기기 위하여 리스트에 추가
 .env
