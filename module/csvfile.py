@@ -8,11 +8,11 @@ from datetime import datetime
 today = datetime.now().strftime('%y%m%d')
 
 #불려온 cvs 파일을 dataframe으로 리턴   
-def call_csv(dirpath, fileName):
+def getCSVFile(dirpath, fileName):
     fileName = dirpath + fileName + '.csv'
     df = pd.read_csv(fileName)
     return df
 
 #csv 파일 저장
-def save_file(df, dirpath, fileName) :
+def saveFile(df, dirpath, fileName) :
     df.to_csv(dirpath + fileName + '_' + today + '.csv' , encoding='utf-8-sig', index=False)
