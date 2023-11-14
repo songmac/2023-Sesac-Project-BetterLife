@@ -9,8 +9,8 @@ today = datetime.now().strftime('%y%m%d')
 
 #불려온 cvs 파일을 dataframe으로 리턴   
 def call_csv(dirpath, fileName):
-    merged_file = dirpath + fileName + '.csv'
-    df = pd.read_csv(merged_file)
+    fileName = dirpath + fileName + '.csv'
+    df = pd.read_csv(fileName)
     return df
 
 #csv 파일 저장
