@@ -1,5 +1,6 @@
 #git Repository에 제외한 파일이나 폴더 리스트
-#확장명
+
+#제외할 확장명
 *.csv
 *.xlsx
 *.zip
@@ -7,9 +8,9 @@
 *.ipynb
 dahee/ignore/
 
-#git 폴더
+#제외할 폴더
 data/
-module/__pycahe__/
+__pycache__/
 
 #apiKey를 숨기기 위하여 리스트에 추가
 .env
