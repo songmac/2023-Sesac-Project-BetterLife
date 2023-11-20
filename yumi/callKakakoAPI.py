@@ -16,7 +16,7 @@ load_dotenv()
 rest_api_key = os.environ.get('REST_API_KEY')
 
 #주소 들고 오기
-def getNewAddress(keyword) :
+def getOldAddress(keyword) :
     api = Local(service_key = rest_api_key)
     try:
         df = api.search_keyword(keyword, dataframe=True)
@@ -36,7 +36,7 @@ rawData = csvfile.getCSVFile(excelPath, excelName)
 dataNum = rawData['시설명'].count()
 
 #시설명 키워드로 지번 주소 들고오기
-rawData['지번주소'] = rawData['시설명'].apply(getNewAddress)
+rawData['지번주소'] = rawData['시설명'].apply(getOldAddress)
 
 #지번주소값 저장
 csvfile.saveFile(rawData, excelPath, saveName)
