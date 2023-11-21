@@ -19,8 +19,4 @@ json['ListProgramByPublicSportsFacilitiesService'].keys()
 
 json['ListProgramByPublicSportsFacilitiesService']['list_total_count']
 
-
-
-
-
 # %%
