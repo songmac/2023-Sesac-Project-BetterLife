@@ -6,6 +6,7 @@
 *.zip
 *.exe
 *.ipynb
+dahee/ignore/
 
 #제외할 폴더
 data/
