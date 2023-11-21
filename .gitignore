@@ -8,9 +8,9 @@
 *.ipynb
 dahee/ignore/
 
-#제외할 폴더
+#제외할 폴더s
 data/
 module/__pycache__/
 
-#apiKey를 숨기기 위하여 리스트에 추가
+#apiKey를 숨기기 위하여 리스트에 추가s
 .env
