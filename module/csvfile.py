@@ -16,3 +16,15 @@ def getCSVFile(dirpath, fileName):
 #csv 파일 저장
 def saveFile(df, dirpath, fileName) :
     df.to_csv(dirpath + fileName + '_' + today + '.csv' , encoding='utf-8-sig', index=False)
+
+#csv 파일 병합
+def merge_csv(dirpath, savefile, fileName):
+    merge_df = pd.DataFrame()
+    file_list = os.listdir(dirpath)
+    for file in file_list :
+        df = pd.read_csv(dirpath + file, sep=",", dtype='object')
+        print(df.shape)
+        merge_df = merge_df._append(df)
+    
+    #동일한 폴더에 병합한 csv 파일 저장
+    return merge_df.to_csv(savefile + fileName + '_' + today + ".csv", index=False, encoding='utf-8-sig')
