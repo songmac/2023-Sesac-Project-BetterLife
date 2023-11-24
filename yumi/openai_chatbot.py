@@ -72,6 +72,7 @@ def is_valid_input(reponse, prompt):
         else : False
 
 #챗봇 질문과 사용자 답변 panel 라이브러리를 통해 화면 출력
+user_input = []
 def collect_messages(_):
     start_time = time.time()
     prompt = inp.value_input
@@ -79,6 +80,7 @@ def collect_messages(_):
     #사용자 content 입력
     if is_valid_input(response ,prompt):
         context.append({'role':'user', 'content':f"{prompt}"})
+        user_input.append(prompt)
         #openai 응답값
         response = interact_with_model(context)
         end_time = time.time()
