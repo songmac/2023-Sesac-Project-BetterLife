@@ -5,7 +5,7 @@ import csvfile
 
 csvPath = "./data/sample_data/"
 savePath = "./data/"
-fileName = "id_1 (1)"
+fileName = "id_1 (7)"
 
 csvdata = csvfile.getCSVFile(csvPath, fileName)
 print(csvdata)

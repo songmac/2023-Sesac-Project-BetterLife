@@ -1,13 +1,16 @@
 import openai
 import os
+from dotenv import load_dotenv
 import requests
 
 # OpenAI API 키 설정
+load_dotenv()
 api_key = os.environ.get('OPENAI_API_KEY')
+print(api_key)
 openai.api_key = api_key
 
 # 사용자 입력값
-user_input = "안녕하세요, 운동 코치님! 나는 25세이고 체력 단련을 원해요."
+user_input = "중구 25살 대사증후군 심폐지구력"
 
 # API에 전송할 데이터
 data = {
