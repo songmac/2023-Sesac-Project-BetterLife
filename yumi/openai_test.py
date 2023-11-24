@@ -9,7 +9,7 @@ import concurrent.futures
 
 #load .env
 load_dotenv()
-api_key = os.environ.get('OPENAI_API_KEY')
+api_key = os.environ.get('OPEN_API_KEY')
 
 #api key 설정
 openai.api_key = api_key
@@ -70,27 +70,24 @@ def is_valid_input(reponse, prompt):
         if re.match(prompt, num_pattern) :
             return True
         else : False
+    return True
 
 #챗봇 질문과 사용자 답변 panel 라이브러리를 통해 화면 출력
 def collect_messages(_):
     start_time = time.time()
     prompt = inp.value_input
-    inp.value = '' #사용자 입력 초기화
+    inp.value = '' #사용자 입력 초기값
     #사용자 content 입력
-    if is_valid_input(response ,prompt):
-        context.append({'role':'user', 'content':f"{prompt}"})
-        #openai 응답값
-        response = interact_with_model(context)
-        end_time = time.time()
-        context.append({'role':'system', 'content':f"{response}"})
-        print("prompt 값 : ", prompt)
-        #화면에 보여주기
-        panels.append(pn.Row('나:', pn.pane.Markdown(prompt, width=600)))
-        panels.append(pn.Row('나의운동코치:', pn.pane.Markdown(response, width=600, styles={'background-color': '#f0fcd4'})))
-        print("taken time : ", end_time - start_time)
-    else:
-        # 유효하지 않은 입력에 대한 안내 메시지
-        panels.append(pn.Row('나의운동코치:', pn.pane.Markdown("죄송합니다. 입력이 잘못되었습니다. 다시 시도해주세요.", width=600, styles={'background-color': '#f0fcd4'})))
+    context.append({'role':'user', 'content':f"{prompt}"})
+    #openai 응답값
+    response = get_completion_from_messages(context)
+    end_time = time.time()
+    context.append({'role':'system', 'content':f"{response}"})
+    #화면에 보여주기
+    panels.append(pn.Row('나:', pn.pane.Markdown(prompt, width=600)))
+    panels.append(pn.Row('나의운동코치:', pn.pane.Markdown(response, width=600, styles={'background-color': '#f0fcd4'})))
+    print("taken time : ", end_time - start_time)
+    panels.append(pn.Row('나의운동코치:', pn.pane.Markdown("죄송합니다. 입력이 잘못되었습니다. 다시 시도해주세요.", width=600, styles={'background-color': '#f0fcd4'})))
     return pn.Column(*panels)
 
 #챗봇 화면 만들기 
@@ -103,7 +100,7 @@ inp = pn.widgets.TextInput(value="안녕하세요!!", placeholder='입력해주�
 #입력 버튼
 button_conversation = pn.widgets.Button(name="입력")
 #대화내용 화면에 표기
-interactive_conversation = pn.bind(lambda _: asyncio.create_task(collect_messages(_)), button_conversation)
+interactive_conversation = pn.bind(collect_messages, button_conversation)
 dashboard = pn.Column(
     inp,
     pn.Row(button_conversation),
