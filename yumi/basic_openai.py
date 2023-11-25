@@ -13,12 +13,15 @@ api_key = os.environ.get('OPENAI_API_KEY')
 openai.api_key = api_key
 
 #chat gpt 호출하기 : gpt-3.5-turbo
+#completions은 질문을 하면 답을 해주는 text completion
+#chat completion은 
 def get_completion_from_messages(messages, model="gpt-3.5-turbo", temperature=0, max_tokens=500):
     response = openai.chat.completions.create(
         model= model,
         messages = messages,
         temperature = temperature,
         max_tokens = max_tokens, #최대 토큰값
+        stream = True, #server-sent 방식
     )
     return response.choices[0].message.content
 
@@ -76,9 +79,9 @@ def collect_messages(_):
     if is_question :
         #사용자 content 입력
         question_context.append({'role':'user', 'content':f"{prompt}"})
-        
         #openai 응답값
         response = get_completion_from_messages(question_context)
+        print("test : ", response)
         question_context.append({'role':'system', 'content':f"{response}"})
         print(response)
         if response in ["목표", "마지막"]:
