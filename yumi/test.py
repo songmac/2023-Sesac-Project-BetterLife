@@ -1,0 +1,230 @@
+import os
+from dotenv import load_dotenv
+import panel as pn
+import time
+import openai
+
+# OpenAI 설정 키값 가져오기
+load_dotenv()
+api_key = os.environ.get('OPENAI_API_KEY')
+
+# OpenAI API 키 설정
+openai.api_key = api_key
+
+# Chat GPT 호출하기 : gpt-3.5-turbo
+def get_completion_from_messages(messages, model="gpt-3.5-turbo", temperature=0, max_tokens=500):
+    response = openai.chat.completions.create(
+        model=model,
+        messages=messages,
+        temperature=temperature,
+        max_tokens=max_tokens,
+    )
+    return response.choices[0].message.content
+
+# OpenAI에 학습할 내용
+context = [
+    {
+        'role': 'system',
+        'content': """
+        너는 사용자에게 적합한 운동프로그램을 추천하기 위한 챗봇이야
+        사용자에게 먼저 인사를 하고, 해당하는 질문 3개야
+        아래 해당하는 질문에 모든 답변만 받아줘
+
+        질문을 순서대로 사용자에게 한개씩 해줘
+
+        - 나이가 어떻게 되나요?
+        - 거주지가 어떻게 되나요? (예시 : 중구 회현동)
+        - 운동 목표를 골라주세요. (1: 체력단련, 2: 심폐기능단련)
+        """
+    }
+]
+
+# 챗봇 질문 및 답변 저장하기 
+user_input = []  # 모델링 input값으로 넣기 위해 사용자 입력값 저장
+
+# 챗봇이 사용자가 먼저 입력을 하지 않으면 챗봇이 반응을 하지 않으므로, 
+# 사용자가 default 값으로 안녕하세요로 시작하게 만들기 위함
+initial_start = 0
+#챗봇 질문 및 답변 저장하기 
+user_input = [] #모델링 input값으로 넣기 위해 사용자 입력값 저장
+#챗봇이 사용자가 먼저 입력을 하지 않으면 챗봇이 반응을 하지 않으므로, 
+#사용자가 default 값으로 안녕하세요로 시작하게 만들기 위함
+inital_start = 0
+#챗봇 질문 및 답변 저장하기 
+user_input = [] #모델링 input값으로 넣기 위해 사용자 입력값 저장
+#챗봇이 사용자가 먼저 입력을 하지 않으면 챗봇이 반응을 하지 않으므로, 
+#사용자가 default 값으로 안녕하세요로 시작하게 만들기 위함
+inital_start = 0
+import os
+from dotenv import load_dotenv
+import panel as pn
+import time
+
+import openai
+
+# OpenAI API 키 설정
+load_dotenv()
+api_key = os.environ.get('OPENAI_API_KEY')
+
+# OpenAI API 키 설정
+openai.api_key = api_key
+
+# Chat GPT 호출하기 : gpt-3.5-turbo
+def get_completion_from_messages(messages, model="gpt-3.5-turbo", temperature=0, max_tokens=500):
+    response = openai.chat.completions.create(
+        model=model,
+        messages=messages,
+        temperature=temperature,
+        max_tokens=max_tokens,  # 최대 토큰값
+    )
+    return response.choices[0].message.content
+
+# OpenAI에 학습할 내용
+context = [
+    {'role': 'system',
+     'content': """
+      너는 사용자에게 적합한 운동프로그램을 추천하기 위한 챗봇이야
+      사용자에게 먼저 인사를 하고, 해당하는 질문 3개야
+      아래 해당하는 질문에 모든 답변만 받아줘
+
+      질문을 순서대로 사용자에게 한개씩 해줘
+
+      - 나이가 어떻게 되나요?
+      - 거주지가 어떻게 되나요? (예시: 중구 회현동)
+      - 운동 목표를 골라주세요. (1: 체력단련, 2: 심폐기능단련)
+    """
+     }
+]
+
+# 챗봇 질문 및 답변 저장하기
+user_input = []  # 모델링 input값으로 넣기 위해 사용자 입력값 저장
+# 챗봇이 사용자가 먼저 입력을 하지 않으면 챗봇이 반응을 하지 않으므로,
+# 사용자가 default 값으로 안녕하세요로 시작하게 만들기 위함
+initial_start = 0
+
+import os
+from dotenv import load_dotenv
+import panel as pn
+import time
+import openai
+
+# openai 설정 키값 들고 오기
+load_dotenv()
+api_key = os.environ.get('OPENAI_API_KEY')
+
+# openai api key 설정
+openai.api_key = api_key
+
+# chat gpt 호출하기 : gpt-3.5-turbo
+def get_completion_from_messages(messages, model="gpt-3.5-turbo", temperature=0, max_tokens=500):
+    response = openai.chat.completions.create(
+        model=model,
+        messages=messages,
+        temperature=temperature,
+        max_tokens=max_tokens,  # 최대 토큰값
+    )
+    return response.choices[0].message.content
+
+# openai에 학습할 내용
+question_context = [
+    {'role': 'system',
+     'content': """
+      너는 사용자에게 적합한 운동프로그램을 추천하기 위한 챗봇이야
+      사용자에게 먼저 인사를 하고, 해당하는 질문 3개야
+      아래 해당하는 질문에 모든 답변만 받아줘
+
+      질문을 순서대로 사용자에게 한개씩 해줘
+
+      - 나이가 어떻게 되나요?
+      - 거주지가 어떻게 되나요? (예시 : 중구 회현동)
+      - 운동 목표를 골라주세요. (1: 체력단련, 2: 심폐기능단련)
+    """
+     }
+]
+
+answer_context = [
+    {'role': 'system',
+     'content': """
+      너는 사용자에게 적합한 운동프로그램을 추천하기 위한 챗봇이야 
+      해당하는 값을 넣어서     
+      프로그램명 {program}
+      위치 {location}
+      시간 {business_hour}을 정보 기준으로 사용자에게 말하듯이 말해줘
+    """
+     }
+]
+
+# 챗봇 질문 및 답변 저장하기
+user_input = []  # 모델링 input값으로 넣기 위해 사용자 입력값 저장
+# 챗봇이 사용자가 먼저 입력을 하지 않으면 챗봇이 반응을 하지 않으므로,
+# 사용자가 default 값으로 안녕하세요로 시작하게 만들기 위함
+inital_start = 0
+is_question = True
+
+program = "수영"
+location = "광진문화예술회관"
+business_hour = "오전6시 ~ 오후 10시"
+
+def collect_messages(_):
+    global inital_start
+    global is_question
+
+    if inital_start == 0:
+        prompt = "안녕하세요"
+        inp.value = ""
+    else:
+        prompt = inp.value_input
+        inp.value = ""
+
+    if is_question:
+        print("is question")
+        # 사용자 content 입력
+        question_context.append({'role': 'user', 'content': f"{prompt}"})
+
+        # openai 응답값
+        response = get_completion_from_messages(question_context)
+        question_context.append({'role': 'system', 'content': f"{response}"})
+        print(response)
+        if "목표" in response or "마지막" in response:
+            is_question = False
+    else:
+        print("---------먹혔나?")
+        answer_context[-1]['content'] = answer_context[-1]['content'].format(
+            program=program, location=location, business_hour=business_hour)
+        print("+++++++++++++=", answer_context)
+        response = get_completion_from_messages(answer_context)
+        
+    #화면에 보여주기
+    panels.append(pn.Row('나:', pn.pane.Markdown(prompt, width=600)))
+    panels.append(pn.Row('나의운동코치:', pn.pane.Markdown(response, width=600, styles={'background-color': '#f0fcd4'})))
+    
+    if "종료" in prompt:
+        return pn.Column("채팅이 이미 종료되었습니다.")
+    inital_start += 1
+    return pn.Column(*panels)
+
+
+# 추천 프로그램을 생성하는 함수 (가상의 함수, 실제 내용은 프로젝트에 맞게 수정)
+def get_recommendation_program(user_input):
+    # 여기에 사용자 입력을 기반으로 추천 프로그램을 생성하는 로직을 추가하세요.
+    # 예를 들어, user_input 리스트에 담긴 정보를 기반으로 프로그램을 생성하고 반환합니다.
+    return "태권도"
+
+# Chatbot 화면
+pn.extension()
+
+# 디스플레이를 위한 패널
+panels = [] 
+
+# 챗봇 input 버튼
+inp = pn.widgets.TextInput(value="안녕하세요", placeholder='답변을 입력해주세요')
+button_conversation = pn.widgets.Button(name="입력")
+interactive_conversation = pn.bind(collect_messages, button_conversation)
+dashboard = pn.Column(
+    inp,
+    pn.Row(button_conversation),
+    pn.panel(interactive_conversation, loading_indicator=True),
+)
+
+# 대쉬보드 출력
+dashboard.show()
