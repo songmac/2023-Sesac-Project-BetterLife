@@ -1,7 +1,6 @@
 import os
 import panel as pn
 from dotenv import load_dotenv
-import json, requests
 import gradio as gr
 
 from langchain.chat_models import ChatOpenAI
@@ -11,7 +10,19 @@ from pydantic import BaseModel
 
 # Load .env
 load_dotenv()
-api_key = os.environ.get('OPEN_API_KEY')
+api_key = os.environ.get('OPENAI_API_KEY')
+
+answer_context = [
+ {'role':'system',
+     'content':"""
+      너는 사용자에게 적합한 운동프로그램을 추천하기 위한 챗봇이야 
+      해당하는 값을 넣어서     
+      프로그램명 {program}
+      위치 {location}
+      시간 {business_hour}을 정보 기준으로 사용자에게 말하듯이 말해줘
+    """
+    }  
+ ]
 
 class CustomAIMessage(AIMessage):
     questions: Optional[list[str]] = None
@@ -30,8 +41,11 @@ class ExerciseChatBot:
 
         # AIMessage 대신에 CustomAIMessage를 사용
         custom_ai_message = CustomAIMessage(content=user_input, questions=[
-            "1. 나이가 어떻게 되나요?",
-            "2. 운동 목표를 골라주세요. (1: 체력단련, 2: 심폐기능단련)",
+            """너는 사용자에게 적합한 운동프로그램을 추천하기 위한 챗봇이야 
+            해당하는 값을 넣어서     
+            프로그램명 {program}
+            위치 {location}
+            시간 {business_hour}을 정보 기준으로 사용자에게 말하듯이 말해줘)"""
         ])
         
         history_langchain_format.append(custom_ai_message)
@@ -44,6 +58,10 @@ class ExerciseChatBot:
         
 exercise_chat_bot_instance = ExerciseChatBot()
 
+program = "수영"
+location = "광진문화예술회관"
+business_hour = "오전6시 ~ 오후 10시"
+
 gr.ChatInterface(
     fn=exercise_chat_bot_instance.interact_with_model,
     textbox=gr.Textbox(placeholder="입력", container=False, scale=5),
@@ -52,7 +70,7 @@ gr.ChatInterface(
     title="운동 프로그램 추천 시스템",
     description="운동프로그램을 추천해 주는 챗봇 입니다",
     theme="soft",
-    retry_btn="다시보내기 ↩",
-    undo_btn="이전챗 삭제 ❌",
-    clear_btn="전챗 삭제 💫",
+    # retry_btn="다시보내기 ↩",
+    # undo_btn="이전챗 삭제 ❌",
+    # clear_btn="전챗 삭제 💫",
 ).launch()
