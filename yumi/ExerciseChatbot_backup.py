@@ -44,7 +44,7 @@ def is_valid_input(index, response):
     else : 
         return True
     
-user_input = []       
+     
 class ExerciseChatbot:
     def __init__(self):
         self.user_data = {}
@@ -79,11 +79,33 @@ class ExerciseChatbot:
         self.chat_history.append({'role': 'system', 'message': current_question})
         if is_valid_input(self.current_question_index, response) :
             self.chat_history.append({'role': '나', 'message': response})
-            user_input.append(response)
+            #print(response)
+            # 선택한 번호에 대응하는 키 값을 출력
+            key = get_key_from_response(self.current_question_index, response)
+            print(f"선택한 번호에 대응하는 키 값: {key}")
+            user_input.append(key)
         else :
             self.chat_history.append({'role': 'system', 'message': "죄송합니다. 입력이 잘못되었습니다. 다시 입력해주세요"})
             self.current_question_index -= 1 #잘못된 답변을 했을때 다시 이전 질문으로 돌아가기 위함
-            
+
+def get_key_from_response(index, response):
+    key_mappings = [
+        {'1': '학생(초, 중, 고등학생)', '2':'성인(대학생)', '3':'노인'}, 
+        {},
+        {'1': '없음', '2':'있음'}, 
+        {'1':'다이어트', '2':'스트레스 해소', '3':'근력 향상', '4':'사회적 활동 및 취미', '5':'성능 향상 및 목표 도달'}, 
+        {'1':'관절 및 근육 상태', '2':'심폐 기능', '3':'당뇨 관리','4':'스트레스 관리', '5':'우울증 및 불안', '6':'수면 부족', '7':'대사 증후군 및 대사 질환', '8':'호르몬 수준' },
+        {'1': '주 1회', '2':'주 2회', '3':'주 3회', '4': '주 4회 이상'},
+        {'1':'새벽', '2':'오전', '3':'오후', '4':'저녁', '5':'무관'},
+        {'1':'구기 및 라켓', '2':'레저', '3':'무도', '4':'무용', '5':'민속', '6':'재활', '7':'체력 단련 및 생활 운동'}, 
+        {'1':'5명 이하', '2':'5명 이상', '3':'무관'}, 
+        {'1':'연령대', '2':'건강 상태', '3':'운동 목표', '4':'선호 지역', '5':'선호 빈도', '6':'선호 시간대', '7':'선호 운동', '8':'선호 인원수', '9':'무관'}
+    ]
+    print(index)
+    return key_mappings[index-1].get(response, response)
+
+user_input = []  
+
 # ExerciseChatbot 인스턴스 생성
 exercise_chatbot = ExerciseChatbot()
 
@@ -107,6 +129,9 @@ def submit_response(event):
         role = entry['role']
         message = entry['message']
         chat_history += f"{role}: {message}\n"
+        
+    if "질문이 끝났습니다" in next_question:
+        print("사용자 전체 답변 : ", user_input)
 
     chat_history_panel.object = chat_history
 
@@ -118,13 +143,12 @@ layout = pn.Column(
     chat_history_panel
 )
 
-print("사용자 전체 답변 : ", user_input)
-
 # 버튼이 클릭되었을 때 호출
 submit_button.on_click(submit_response)
 
 # 질문 표시
 question_text.object = exercise_chatbot.ask_next_question()
+
 
 # Panel 대시보드 표시
 layout.servable().show()
