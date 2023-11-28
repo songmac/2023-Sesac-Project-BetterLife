@@ -143,13 +143,14 @@ def submit_response(event):
         submit_button.disabled = True  # 모든 질문에 답했을 때 버튼 비활성화
         response_input.disabled = True
         
-        
         #TODO : 모델링해서 나온 값 names에 넣기
+        #TODO : user_answer에 프로그램명별로 넣어서 프로그램명이 포함된 user_answer을 만들어라
         result_program_names = ['수영', '필라테스', '헬스']
         for idx, program_name in enumerate(result_program_names):
             user_answers[idx].insert(2, program_name)
         print(user_answers)
         modeling_input = ' '.join(user_answers)
+        #TODO : user_answer값이 3개인 경우 어떻게 유사도를 구할지 ...
         recommendations_df = get_facility_info.recommend_programs(modeling_input, unique_program)
         
         # 프로그램 추천 정보를 채팅창에 추가
