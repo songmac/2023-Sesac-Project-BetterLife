@@ -41,7 +41,7 @@ def recommend_programs(user_answers, data):
     return pd.DataFrame(recommendations)
 
 # 예시 사용
-# user_answers = '스쿼시 무관 무관 1 저녁 중랑구'
+# user_answers = '학생 수영 종로구 무 새벽 주1회'
 # excel_file_path = './yumi/langchain_facility_info.xlsx'
 # df = pd.read_excel(excel_file_path)
 # #중복된 행은 삭제
