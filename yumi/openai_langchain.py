@@ -1,7 +1,7 @@
 import os
 import panel as pn
 from dotenv import load_dotenv
-import gradio as gr
+import gradio as gr 
 
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import AIMessage, HumanMessage, SystemMessage
@@ -61,16 +61,18 @@ exercise_chat_bot_instance = ExerciseChatBot()
 program = "수영"
 location = "광진문화예술회관"
 business_hour = "오전6시 ~ 오후 10시"
-
-gr.ChatInterface(
-    fn=exercise_chat_bot_instance.interact_with_model,
-    textbox=gr.Textbox(placeholder="입력", container=False, scale=5),
-    # 채팅창의 크기를 조절한다.
-    chatbot=gr.Chatbot(height=400),
-    title="운동 프로그램 추천 시스템",
-    description="운동프로그램을 추천해 주는 챗봇 입니다",
-    theme="soft",
-    # retry_btn="다시보내기 ↩",
-    # undo_btn="이전챗 삭제 ❌",
-    # clear_btn="전챗 삭제 💫",
-).launch()
+user_input = "종로구에 위치한 센터 이름이 추천해줘"
+response = exercise_chat_bot_instance.interact_with_model(user_input)
+print(response)
+# gr.ChatInterface(
+#     fn=exercise_chat_bot_instance.interact_with_model,
+#     textbox=gr.Textbox(placeholder="입력", container=False, scale=5),
+#     # 채팅창의 크기를 조절한다.
+#     chatbot=gr.Chatbot(height=400),
+#     title="운동 프로그램 추천 시스템",
+#     description="운동프로그램을 추천해 주는 챗봇 입니다",
+#     theme="soft",
+#     # retry_btn="다시보내기 ↩",
+#     # undo_btn="이전챗 삭제 ❌",
+#     # clear_btn="전챗 삭제 💫",
+# ).launch()
