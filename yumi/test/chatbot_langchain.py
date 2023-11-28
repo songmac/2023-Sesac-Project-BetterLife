@@ -60,7 +60,7 @@ class ExerciseChatBot:
             return f"죄송합니다 입력이 잘못되었습니다 다시 입력해주세요"
 
 # CSV 파일 경로 설정
-csv_file_path = "./yumi/langchain_facility_info.csv"
+csv_file_path = "./yumi/langchain_facility_info.xlsx"
 
 # ExerciseChatBot 인스턴스 생성
 exercise_chat_bot_instance = ExerciseChatBot(csv_file_path)
