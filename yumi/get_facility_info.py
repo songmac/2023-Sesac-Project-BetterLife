@@ -28,7 +28,7 @@ def recommend_programs(user_answers, data):
 
     # 추천 결과를 담을 리스트
     recommendations = []
-    for idx in similar_program_indices[:3]:
+    for idx in similar_program_indices[:1]:
         program_info = data.iloc[idx].copy()
         program_info['Cosine Similarity'] = cosine_similarities[idx]
         
