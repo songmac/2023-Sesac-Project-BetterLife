@@ -20,27 +20,23 @@ def is_valid_input(index, response):
                 return True
             else : False
     elif index == 4 : #운동목표
-            if response in ['1', '2', '3', '4', '5', '6'] :
+            if response in ['1', '2', '3', '4', '5', '6', '7'] :
                 return True
             else : False
-    elif index == 5 : #건강상태
-            if response in ['1', '2', '3', '4','5','6','7','8'] :
+    elif index == 5 : #선호 운동
+            if response in ['1', '2', '3', '4','5', '6', '7', '8'] :
                 return True
             else : False
     elif index == 6 : #운동 시간대
-            if response in ['1', '2', '3', '4','5'] :
+            if response in ['1', '2', '3', '4', '5'] :
                 return True
             else : False
-    elif index == 7 : #선호 운동
-            if response in ['1', '2', '3', '4','5','7'] :
+    elif index == 7 : #주당 운동 빈도
+            if response in ['1', '2', '3', '4', '5'] :
                 return True
             else : False
-    elif index == 8 : #운동빈도
-            if response in ['1', '2', '3', '4'] :
-                return True
-            else : False
-    elif index == 9 : #중요항목
-            if response in ['1', '2', '3', '4','5','6','7'] :
+    elif index == 8 : #중요항목
+            if response in ['1', '2', '3', '4', '5', '6', '7'] :
                 return True
             else : False
     else : 
@@ -51,16 +47,15 @@ class ExerciseChatbot:
     def __init__(self):
         #self.user_data = {}
         self.questions = [
-            "안녕하세요! 저는 공공 운동 프로그램을 추천을 도와주는 챗봇입니다.\n지금부터 여러 가지 질문을 통해 사용자에게 맞춤형 운동 프로그램을 추천해 드리겠습니다.\n먼저 몇 가지 개인 정보를 알아보겠습니다\n\n먼저, 당신의 연령대가 어떻게 되나요? (1: 학생, 2: 성인, 3: 노인)",
-            "당신이 선호하는 '지역구'을 알려주세요 (예시: 중구, 종로구, 마포구 등)",
+            "안녕하세요! 저는 공공 운동 프로그램을 추천을 도와주는 챗봇입니다.\n지금부터 여러 가지 질문을 통해 사용자에게 맞춤형 운동 프로그램을 추천해 드리겠습니다.\n먼저 몇 가지 개인 정보를 알아보겠습니다\n먼저, 당신의 연령대가 어떻게 되나요?\n1: 학생, 2: 성인, 3: 노인",
+            "당신이 운동을 할때 선호하는 '지역구'을 알려주세요 (예시: 중구, 종로구, 마포구 등)",
             "장애로 인해 운동시 활동에 불편한 점이 있나요? (1: 없음, 2: 있음)",
-            "이제는 운동에 대한 선호에 대해 알아보겠습니다.\n어떤 목표로 운동을 하시려나요?\n1: 체중관리 \n2: 스트레스 해소 \n3: 근력 향상 \n4: 체형 교정 \n5: 사회적 활동 \n6: 기초체력향상 \n7: 재활운동 \n8: 무관)",
-            "아래 건강 상태 중 어떤 문제를 갖고 있나요? \n1: 관절 및 근육 상태 (관절염, 근육 경련, 근육 약화 등\n2: 심폐 기능 (심혈관 질환, 호흡기 문제)\n3: 당뇨 관리 (혈당 관리)\n4: 스트레스 관리\n5: 우울증 및 불안\n6: 수면 문제\n7: 대사 증후군 및 대사 질환 (당뇨, 고혈압 등 대사 관련 질환)\n8: 호르몬 수준 \n9: 무관",
-            "어떤 시간대에 운동하는 것을 선호하시나요? (1: 새벽, 2: 오전, 3: 오후, 4: 저녁, 5: 무관)",
-            "어떤 종류의 운동을 선호하시나요?\n1: 구기및라켓\n2: 레저\n3: 무도\n4: 무용\n5: 민속\n6: 재활\n7: 체력단련및생활운동\n8: 무관))",
-            "주당 몇 회 정도의 운동을 선호하시나요? (1: 주1회 2: 주2회 3: 주3회 4: 주4회 이상 \n5: 무관)",
-            "현재 항목 중 가장 중요하게 여기는 것이 무엇인가요?\n1: 건강상태\n2: 운동목표\n3: 연령대\n4: 거주지\n5: 선호빈도\n6: 선호시간대 \n7: 무관",
-            "질문이 끝났습니다. 잠시만 기다려주세요 곧 운동 프로그램을 추천해드리겠습니다"
+            "이제는 운동에 대한 선호에 대해 알아보겠습니다.\n어떤 목표로 운동을 하시려나요?\n1: 수명 연장 \n2: 심폐 기능 향상 \n3: 근력 향상 \n4: 유연성 향상 \n5: 체중 및 신체구성(체지방) \n6: 기분개선 \n7: 무관",
+            "어떤 종류의 운동을 선호하시나요?\n1: 구기 및 라켓\n2: 레저\n3: 무도\n4: 무용\n5: 민속\n6: 재활\n7: 체력단련 및 생활운동\n8: 무관",            
+            "어떤 시간대에 운동하는 것을 선호하시나요?\n 1: 새벽\n 2: 오전\n 3: 오후\n 4: 저녁\n 5: 무관",
+            "주당 몇 회를 하는 운동을 원하시나요?\n 1: 주1회\n 2: 주2회\n 3: 주3회\n 4: 주4회 이상\n 5: 무관",
+            "현재 항목 중 가장 중요하게 여기는 것이 무엇인가요?\n1: 운동 목표\n2: 연령대\n3: 선호 지역\n4: 선호 시간대\n5: 선호 운동 \n6: 무관",
+            "질문이 끝났습니다. 잠시만 기다려주세요~~ 곧 운동 프로그램을 추천해드리겠습니다"
         ]
         # 질문과 응답 기록을 저장
         self.chat_history = []  
@@ -86,26 +81,31 @@ class ExerciseChatbot:
             # 선택한 번호에 대응하는 키 값을 출력
             key = get_key_from_response(self.current_question_index, response)
             print(f"선택한 번호에 대응하는 키 값: {key}")
-            user_input.append(key)
+            #프로그램을 추천할때 분류가 필요한 항목만 입력(연령대, 위치, 장애여부,운동빈도)
+            if self.current_question_index in [1,2,3,6,7] :
+                user_answers.append(key)
         else :
             self.chat_history.append({'role': 'system', 'message': "죄송합니다. 입력 형식이 잘못되었습니다. 다시 입력해주세요"})
             self.current_question_index -= 1 #잘못된 답변을 했을때 다시 이전 질문으로 돌아가기 위함
+    
+    #사용자가 모든 질문에 답했는지 여부를 확인
+    def is_all_questions_answered(self):
+        return self.current_question_index == len(self.questions)
 
 def get_key_from_response(index, response):
     key_mappings = [
         {'1': '학생', '2':'성인', '3':'노인'}, 
         {},
-        {'1': '없음', '2':'있음'}, 
-        {'1':'다이어트', '2':'스트레스 해소', '3':'근력 향상', '4':'체형관리', '4':'사회적 활동', '5':'성능 향상', '6' : '무관'}, 
-        {'1':'관절 및 근육 상태', '2':'심폐 기능', '3':'당뇨 관리','4':'스트레스 관리', '5':'우울증 및 불안', '6':'수면 부족', '7':'대사 증후군 및 대사 질환', '8':'호르몬 수준', '9' : '무관'},
+        {'1': '무', '2':'유'}, 
+        {'1':'수명연장', '2':'심폐기능향상', '3':'근력및근육강화', '4':'유연성향상', '5':'체중및신체구성(체지방)조절', '6':'기분개선', '7' : '무관'}, 
+        {'1':'구기및라켓', '2':'레저', '3':'무도', '4':'무용', '5':'민속', '6':'재활', '7':'체력단련및생활운동', '8' : '무관'}, 
         {'1':'새벽', '2':'오전', '3':'오후', '4':'저녁', '5':'무관'},
-        {'1':'구기 및 라켓', '2':'레저', '3':'무도', '4':'무용', '5':'민속', '6':'재활', '7':'체력 단련 및 생활 운동', '8' : '무관'}, 
-        {'1': '주 1회', '2':'주 2회', '3':'주 3회', '4': '주 4회 이상' , '5' : '무관'},
-        {'1':'연령대', '2':'건강 상태', '3':'운동 목표', '4':'선호 지역', '5':'선호 빈도', '6':'선호 시간대', '7':'선호 운동', '8':'무관'}
+        {'1': '주1회', '2':'주2회', '3':'주3회', '4': '주4회 이상' , '5' : '무관'},
+        {'1':'운동 목표', '2':'연령대', '3':'선호지역', '4':'선호시간대', '5':'선호 운동', '6':'무관'}
     ]
     return key_mappings[index-1].get(response, response)
 
-user_input = []  
+user_answers = []  
 
 # ExerciseChatbot 인스턴스 생성
 exercise_chatbot = ExerciseChatbot()
@@ -116,29 +116,50 @@ response_input = pn.widgets.TextInput(placeholder='입력해주세요')
 submit_button = pn.widgets.Button(name='입력')
 chat_history_panel = pn.pane.Str('', width=600, height=300)
 
-#user_answers = '스쿼시 무관 무관 1 저녁 중랑구'
 excel_file_path = './yumi/langchain_facility_info.xlsx'
 data = pd.read_excel(excel_file_path)
 #중복된 행은 삭제
 unique_program = data.drop_duplicates()
 
-# 사용자가 입력한 내용을 갖고와 다음 질문을 화면에 표시하고 대화를 기록
+# 사용자가 입력한 내용과 다음 질문을 화면에 표시하고 대화를 기록
 def submit_response(event):
     response = response_input.value
     exercise_chatbot.process_user_response(response)
     
+    # 다음 질문을 표시
     next_question = exercise_chatbot.ask_next_question()
     question_text.object = next_question
     response_input.value = ''
-
+    
     # 대화 내용 기록
     chat_history = ''
     for entry in exercise_chatbot.chat_history:
         role = entry['role']
         message = entry['message']
         chat_history += f"{role}: {message}\n"
+    
+    # 사용자 응답을 이용하여 프로그램 정보 추천
+    if exercise_chatbot.is_all_questions_answered():
+        submit_button.disabled = True  # 모든 질문에 답했을 때 버튼 비활성화
+        response_input.disabled = True
+        
+        
+        #TODO : 모델링해서 나온 값 names에 넣기
+        result_program_names = ['수영', '필라테스', '헬스']
+        for idx, program_name in enumerate(result_program_names):
+            user_answers[idx].insert(2, program_name)
+        print(user_answers)
+        modeling_input = ' '.join(user_answers)
+        recommendations_df = get_facility_info.recommend_programs(modeling_input, unique_program)
+        
+        # 프로그램 추천 정보를 채팅창에 추가
+        if not recommendations_df.empty:
+            chat_history += "\n추천된 프로그램 정보:\n"
+            chat_history += recommendations_df.to_string(index=False)
 
     chat_history_panel.object = chat_history
+
+#TODO : 화면 라이브버리 변경
 
 # 버튼이 클릭되었을 때 호출
 submit_button.on_click(submit_response)
