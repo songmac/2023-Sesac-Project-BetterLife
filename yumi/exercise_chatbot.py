@@ -10,9 +10,7 @@ def is_valid_input(index, response):
             return True
         else : False
     elif index == 2 : #위치
-            if re.match(location_pattern, response) :
-                return True
-            else : False
+        return bool(re.match(location_pattern, response))
     elif index == 3 : #장애여부
             if response in ['1', '2'] :
                 return True
@@ -93,10 +91,14 @@ class ExerciseChatbot:
             self.current_question_index -= 1 #잘못된 답변을 했을때 다시 이전 질문으로 돌아가기 위함
     
     #사용자가 모든 질문에 답했는지 여부를 확인
-    def is_all_questions_answered(self):
-        return self.current_question_index == len(self.questions)
     def is_finished(self):
         return self.current_question_index >= len(self.questions)
+    
+    def is_all_questions_answered(self):
+        return self.current_question_index == len(self.questions)
+
+    def get_chat_history(self):
+        return self.chat_history
 
 def get_key_from_response(index, response):
     key_mappings = [

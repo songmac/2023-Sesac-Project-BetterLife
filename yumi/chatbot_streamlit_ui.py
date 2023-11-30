@@ -1,4 +1,3 @@
-import panel as pn
 import pandas as pd
 import get_facility_info
 from exercise_chatbot import ExerciseChatbot  # 새로 추가한 import
@@ -62,7 +61,7 @@ def submit_response(event):
         for key, value in answer_dic.items():
             #answer = answer_dic[answer_key]  # answer_dic에서 실제 answer 가져오기
             modeling_input = ' '.join(value)
-            print("modelint_input:", modeling_input)
+            print("modeling_input:", modeling_input)
             recommendations_df = get_facility_info.recommend_programs(modeling_input, unique_program)
 
             # 전체 결과 데이터프레임에 추가
@@ -75,18 +74,18 @@ def submit_response(event):
 
     chat_history_panel.object = chat_history
 
-# #버튼이 클릭되었을 때 호출
-# submit_button.on_click(submit_response)
-# # 질문 표시
-# question_text.object = exercise_chatbot.ask_next_question()
+#버튼이 클릭되었을 때 호출
+submit_button.on_click(submit_response)
+# 질문 표시
+question_text.object = exercise_chatbot.ask_next_question()
 
-# # Panel 레이아웃 설정
-# layout = pn.Column(
-#     question_text,
-#     response_input,
-#     submit_button,
-#     chat_history_panel
-# )
+# Panel 레이아웃 설정
+layout = pn.Column(
+    question_text,
+    response_input,
+    submit_button,
+    chat_history_panel
+)
 
-# # Panel 대시보드 표시
-# layout.servable().show()
+# Panel 대시보드 표시
+layout.servable().show()
