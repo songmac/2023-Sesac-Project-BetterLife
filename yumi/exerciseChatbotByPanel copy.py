@@ -121,7 +121,7 @@ response_input = pn.widgets.TextInput(placeholder='입력해주세요')
 submit_button = pn.widgets.Button(name='입력')
 chat_history_panel = pn.pane.Str('', width=600, height=300)
 
-excel_file_path = './yumi/langchain_facility_info.xlsx'
+excel_file_path = './data/langchain_facility_info.xlsx'
 data = pd.read_excel(excel_file_path)
 #중복된 행은 삭제
 unique_program = data.drop_duplicates()

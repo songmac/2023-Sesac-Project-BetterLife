@@ -27,7 +27,6 @@ question_text.styles = {
 # 응답 입력창 스타일 설정
 response_input.styles = {
     'background-color': '#FFFFFF',  # 입력창 배경색
-    'padding': '10px',
     'margin': '5px',
     'border-radius': '10px',
     'box-shadow': '0 1px 4px rgba(0, 0, 0, 0.1)',
@@ -35,9 +34,8 @@ response_input.styles = {
 
 # 응답 버튼 스타일 설정
 submit_button.styles = {
-    'background-color': '#4285F4',  # 버튼 배경색
-    'padding': '10px',
     'margin': '5px',
+    'border-radius': '10px',
     'cursor': 'pointer',
 }
 
@@ -46,6 +44,7 @@ data = pd.read_excel(excel_file_path)
 #중복된 행은 삭제
 unique_program = data.drop_duplicates()
 
+panels = []
 # 사용자가 입력한 내용과 다음 질문을 화면에 표시하고 대화를 기록
 def submit_response(event):
     response = response_input.value
@@ -62,6 +61,15 @@ def submit_response(event):
         role = entry['role']
         message = entry['message']
         chat_history += f"{role}: {message}\n"
+
+    def collect_messages(_):
+        prompt = response_input.value
+        response_input.value = ''
+        panels.append(
+            pn.Row('User:', pn.pane.Markdown(prompt, width=600, styles={'background-color': '#F0FCD4'})))
+        panels.append(
+            pn.Row('Be_Life:', pn.pane.Markdown(response, width=600, styles={'background-color': '#F0FCD4'})))
+        return pn.Column(*panels)
     
     # 사용자 응답을 이용하여 프로그램 정보 추천
     if exercise_chatbot.is_all_questions_answered():
@@ -91,12 +99,14 @@ def submit_response(event):
             recommendations_df = get_facility_info.recommend_programs(modeling_input, unique_program)
 
             # 전체 결과 데이터프레임에 추가
-            result_df = pd.concat([result_df, recommendations_df])
-        
+            result_df = pd.concat([result_df, recommendations_df], ignore_index=True)
+
         # 프로그램 추천 정보를 채팅창에 추가
         if not result_df.empty:
-            chat_history += "<div style='background-color: #f9eb54;'>\n추천된 프로그램 정보:</div>"
+            chat_history += "\n추천된 프로그램 정보:</div>"
+            # Styler 객체 생성
             recommendation_table.value = result_df[['시설명','종목명','프로그램명','연령','성별','장애','주간횟수','시간대','지번주소']]
+            print(recommendation_table)
 
     chat_history_panel.object = chat_history
     response_input.styles = {'background-color': '#F9EB54', 'margin-top': '10px'}
@@ -115,16 +125,33 @@ submit_button.on_click(submit_response)
 # 질문 표시
 question_text.object = exercise_chatbot.ask_next_question()
 
-# Panel 레이아웃 설정
-layout = pn.Column(
-    pn.Row(response_input, submit_button),# 텍스트 입력과 버튼을 같은 행에 배치
-    question_text,
-    chat_history_panel,
-    recommendation_table,
-)
+interactive_conversation = pn.bind(collect_messages, button_conversation)
 
-layout.styles = {'background': '#93cbde', 'padding': '10px', 'border': '2px solid #eee',
-                 'box-shadow' :'3px 1px 4px rgba(0, 0, 0, 0.2)',}
+dashboard = pn.Column(
+    pn.panel(pn.Row(response_input, submit_button),
+            loading_indicator=True,
+             height=600,
+             margin=50,
+             padding=50,
+             sizing_mode='stretch_both'),
+    pn.Row(
+        question_text, 
+        chat_history_panel,
+        recommendation_table,)
+    )
 
+dashboard.show()
+
+# # Panel 레이아웃 설정
+# layout = pn.Column(
+#     pn.Row(response_input, submit_button),# 텍스트 입력과 버튼을 같은 행에 배치
+#     question_text, 
+#     chat_history_panel,
+#     recommendation_table,
+# )
+
+##layout.styles = {'background': '#93cbde', 'padding': '10px', 'border': '2px solid #eee',
+#                'box-shadow' :'3px 1px 4px rgba(0, 0, 0, 0.2)',}
+#
 # Panel 대시보드 표시
-layout.servable().show()
+#layout.servable().show()

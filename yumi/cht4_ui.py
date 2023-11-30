@@ -23,7 +23,7 @@ with open("D:/2023-Sesac-Project-BetterLife/ui/styles.md", "r", encoding='utf-8'
 #처음 챗봇 인사말
 INITIAL_MESSAGE = [
     {
-        "role": "system",
+        "role": "Chatbot",
         "content": "안녕하세요! 저는 공공체육시설 운동 프로그램을 추천하는 ComFit이예요. 당신의 정보를 알기 위해 몇가지 질문을 할꺼예요. 해당하는 부분을 선택해 주시면 되요 지금부터 시작할께요🔍",
     },
 ]
@@ -47,50 +47,52 @@ st.sidebar.markdown(
 )
 
 # 세션상태에서 message라는 키로 초기 메시지를 저장하는 것
-if "content" not in st.session_state.keys():
-    st.session_state["messages"] = INITIAL_MESSAGE.copy()
+# if "content" not in st.session_state.keys():
+#     st.session_state["messages"] = INITIAL_MESSAGE.copy()
 
-if "history" not in st.session_state:
-    st.session_state["history"] = []
+# if "history" not in st.session_state:
+#     st.session_state["history"] = []
     
 # 초기 메시지 출력
 for entry in st.session_state["messages"]:
     st.write(f"{entry['role']}: {entry['content']}")
     
 # 사용자 입력 받기
-if prompt := st.chat_input():
-    st.session_state.messages.append({"role": "user", "content": prompt})
+# if prompt := st.text_input(label="", placeholder="답변을 입력해주세요"):
+#     st.session_state.message.append({"role": "user", "content": prompt})
 
 # Excel 파일 읽기
-excel_file_path = './yumi/langchain_facility_info.xlsx'
+excel_file_path = './data/langchain_facility_info.xlsx'
 data = pd.read_excel(excel_file_path)
 unique_program = data.drop_duplicates()
 
 question = exercise_chatbot.ask_next_question()
 st.write(question)
 
-# 사용자 입력
-#response = st.text_input("입력해주세요", key="user_input")
-response = st.chat_input(key="user_input")   
-
 #프로그램 추천을 위한 answer값
 modeling_answers = []
 #해당하는 프로그램 정보를 추출하기 위한 answer값
 cosine_answers = []
 
+# 사용자 입력
+#response = st.text_input("입력해주세요", key="user_input")
+response = st.chat_input(key="user_input")
+
 # 응답 제출 버튼
 if response :
+    st.write(response)
     exercise_chatbot.process_user_response(response)
     next_question = exercise_chatbot.ask_next_question()
-    st.text_input.label_widget.clearable = True
-    st.text(next_question)
+    st.write(next_question)
+    st.text_input = ''
+
     # 대화 내역 표시
     chat_history = ''
     for entry in exercise_chatbot.chat_history:
         role = entry['role']
-        message = entry['message']
+        message = entry['message'] #질문 내용
         chat_history += f"{role}: {message}\n"
-    st.text_area("챗봇과의 대화", chat_history, height=300)
+    #st.text_area("챗봇과의 대화", chat_history, height=300)
 
     # 모든 질문에 답했다면 프로그램 추천 진행
     if exercise_chatbot.is_all_questions_answered():
@@ -129,6 +131,7 @@ if response :
         st.text_area(chat_history)
 
         st.text("챗봇이 마지막 인사를 합니다. 챗봇을 종료합니다.")
+        st.text_area(chat_history)
         
 
 # # Streamlit 페이지 실행
