@@ -36,6 +36,11 @@ for message in st.session_state["messages"]:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
+
+next_question = exercise_chatbot.ask_next_question()
+with st.chat_message("assistant") :
+    st.markdown(next_question)
+    
 # react to user input
 if prompt := st.chat_input("답변을 입력해주세요"):
     #display user message in chat message container
@@ -47,8 +52,14 @@ if prompt := st.chat_input("답변을 입력해주세요"):
 
     #response = f"Echo : {prompt}"
     print('prompt :', prompt)
-    exercise_chatbot.process_user_response(prompt)
-    next_question = exercise_chatbot.ask_next_question()
+    if exercise_chatbot.process_user_response(prompt) :
+        pass
+    else : 
+        #st.chat_message("assistant")
+        st.markdown("입력형식이 잘못 됐습니다")
+    
+    # exercise_chatbot.process_user_response(prompt)
+    # next_question = exercise_chatbot.ask_next_question()
 
     #display assistant reponse in chat message contain 
     with st.chat_message("assistant") :

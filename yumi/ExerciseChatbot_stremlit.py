@@ -76,23 +76,25 @@ class ExerciseChatbot:
         
     #챗봇의 현재 사용자의 채팅 기록
     def process_user_response(self, response):
-        current_question = self.questions[self.current_question_index - 1]
+        current_question = self.questions[self.current_question_index]
         self.chat_history.append({'role': 'assistant', 'messages': current_question})
         if is_valid_input(self.current_question_index, response) :
             self.chat_history.append({'role': 'user', 'messages': response})
             #print(response)
             # 선택한 번호에 해당하는 키 값을 출력 
             #streamlit인 경우 index가 0으로 시작하여 +1, panel인 경우 +1을 빼야함
-            key = get_key_from_response(self.current_question_index + 1, response)
+            key = get_key_from_response(self.current_question_index, response)
             print("현재 process_user_reponse : ", {self.current_question_index})
             print(f"답변 번호에 해당하는 키 값: {key}")
             #프로그램을 추천할때 분류가 필요한 항목만 입력(연령대, 위치, 장애여부,운동빈도)
             modeling_answers.append(key)
             if self.current_question_index in [1,2,3,6,7] :
                 cosine_answers.append(key)
+            return True
         else :
-            self.chat_history.append({'role': 'assistant', 'messages': "죄송합니다. 입력 형식이 잘못되었습니다. 다시 입력해주세요"})
+            message = self.chat_history.append({'role': 'assistant', 'messages': "죄송합니다. 입력 형식이 잘못되었습니다. 다시 입력해주세요"})
             self.current_question_index -= 1 #잘못된 답변을 했을때 다시 이전 질문으로 돌아가기 위함
+            return False
     
     #사용자가 모든 질문에 답했는지 여부를 확인
     def is_finished(self):
