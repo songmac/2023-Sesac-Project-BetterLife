@@ -1,3 +1,4 @@
+# %%
 import os
 import panel as pn
 from dotenv import load_dotenv
