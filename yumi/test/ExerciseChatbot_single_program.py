@@ -47,12 +47,12 @@ class ExerciseChatbot:
     def __init__(self):
         #self.user_data = {}
         self.questions = [
-            "안녕하세요! 저는 공공 운동 프로그램을 추천을 도와주는 챗봇입니다.\n지금부터 여러 가지 질문을 통해 사용자에게 맞춤형 운동 프로그램을 추천해 드리겠습니다.\n먼저 몇 가지 개인 정보를 알아보겠습니다\n먼저, 당신의 연령대가 어떻게 되나요?\n1: 학생, 2: 성인, 3: 노인",
+            "안녕하세요! 저는 공공 운동 프로그램을 추천을 도와주는 챗봇입니다.\n지금부터 여러 가지 질문을 통해 사용자에게 맞춤형 운동 프로그램을 추천해 드리겠습니다.\n먼저 몇 가지 개인 정보를 알아보겠습니다\n먼저, 당신의 연령대가 어떻게 되나요?\n1: 학생(초,중,고), 2: 성인(대학생 포함), 3: 노인",
             "당신이 운동을 할때 선호하는 '지역구'을 알려주세요 (예시: 중구, 종로구, 마포구 등)",
             "장애로 인해 운동시 활동에 불편한 점이 있나요? (1: 없음, 2: 있음)",
             "이제는 운동에 대한 선호에 대해 알아보겠습니다.\n어떤 목표로 운동을 하시려나요?\n1: 수명 연장 \n2: 심폐 기능 향상 \n3: 근력 향상 \n4: 유연성 향상 \n5: 체중 및 신체구성(체지방) \n6: 기분개선 \n7: 무관",
             "어떤 종류의 운동을 선호하시나요?\n1: 구기 및 라켓\n2: 레저\n3: 무도\n4: 무용\n5: 민속\n6: 재활\n7: 체력단련 및 생활운동\n8: 무관",            
-            "어떤 시간대에 운동하는 것을 선호하시나요?\n 1: 새벽\n 2: 오전\n 3: 오후\n 4: 저녁\n 5: 무관",
+            "어떤 시간대에 운동하는 것을 선호하시나요?\n 1: 아침\n 2: 오전\n 3: 오전오후\n 4: 오후\n 5: 저녁 \n 6: 무관 ",
             "주당 몇 회를 하는 운동을 원하시나요?\n 1: 주1회\n 2: 주2회\n 3: 주3회\n 4: 주4회 이상\n 5: 무관",
             "현재 항목 중 가장 중요하게 여기는 것이 무엇인가요?\n1: 운동 목표\n2: 연령대\n3: 선호 지역\n4: 선호 시간대\n5: 선호 운동 \n6: 무관",
             "질문이 끝났습니다. 잠시만 기다려주세요~~ 곧 운동 프로그램을 추천해드리겠습니다"
@@ -82,8 +82,9 @@ class ExerciseChatbot:
             key = get_key_from_response(self.current_question_index, response)
             print(f"선택한 번호에 대응하는 키 값: {key}")
             #프로그램을 추천할때 분류가 필요한 항목만 입력(연령대, 위치, 장애여부,운동빈도)
+            modeling_answers.append(key)
             if self.current_question_index in [1,2,3,6,7] :
-                user_answers.append(key)
+                cosine_answers.append(key)
         else :
             self.chat_history.append({'role': 'system', 'message': "죄송합니다. 입력 형식이 잘못되었습니다. 다시 입력해주세요"})
             self.current_question_index -= 1 #잘못된 답변을 했을때 다시 이전 질문으로 돌아가기 위함
@@ -94,19 +95,21 @@ class ExerciseChatbot:
 
 def get_key_from_response(index, response):
     key_mappings = [
-        {'1': '학생', '2':'성인', '3':'노인'}, 
+        {'1': '학생', '2':'성인', '3':'노인'},
         {},
         {'1': '무', '2':'유'}, 
-        {'1':'수명연장', '2':'심폐기능향상', '3':'근력및근육강화', '4':'유연성향상', '5':'체중및신체구성(체지방)조절', '6':'기분개선', '7' : '무관'}, 
-        {'1':'구기및라켓', '2':'레저', '3':'무도', '4':'무용', '5':'민속', '6':'재활', '7':'체력단련및생활운동', '8' : '무관'}, 
-        {'1':'새벽', '2':'오전', '3':'오후', '4':'저녁', '5':'무관'},
+        {'1':'수명 연장', '2': '심폐 기능 향상', '3':'근력 및 근육강화', '4':'유연성 향상', '5':'체중 및 신체구성(체지방)조절', '6':'기분 개선', '7' : '무관'},
+        {'1':'구기 및 라켓', '2':'레저', '3':'무도', '4':'무용', '5':'민속', '6':'재활', '7':'체력단련및생활운동', '8' : '무관'},
+        {'1':'아침', '2':'오전', '3':'오전오후', '4':'오후', '5':'저녁', '6':'무관'},
         {'1': '주1회', '2':'주2회', '3':'주3회', '4': '주4회 이상' , '5' : '무관'},
-        {'1':'운동 목표', '2':'연령대', '3':'선호지역', '4':'선호시간대', '5':'선호 운동', '6':'무관'}
+        {'1':'운동 목표', '2':'연령대', '3':'선호 지역', '4':'선호 시간대', '5':'선호 운동', '6':'무관'}
     ]
     return key_mappings[index-1].get(response, response)
 
-user_answers = []  
-
+#프로그램 추천을 위한 answer값
+modeling_answers = []
+#해당하는 프로그램 정보를 추출하기 위한 answer값
+cosine_answers = []
 # ExerciseChatbot 인스턴스 생성
 exercise_chatbot = ExerciseChatbot()
 
@@ -143,13 +146,20 @@ def submit_response(event):
         submit_button.disabled = True  # 모든 질문에 답했을 때 버튼 비활성화
         response_input.disabled = True
         
-        
         #TODO : 모델링해서 나온 값 names에 넣기
+        #모델링하여 프로그램이 3개라 dict형태로 사용자 입력값 + 추천프로그램명 저장
         result_program_names = ['수영', '필라테스', '헬스']
+        answer_dic = {}
         for idx, program_name in enumerate(result_program_names):
-            user_answers[idx].insert(2, program_name)
-        print(user_answers)
-        modeling_input = ' '.join(user_answers)
+            # 새로운 리스트 생성하여 삽입
+            updated_answer = cosine_answers[:2] + [program_name] + cosine_answers[2:]
+            # user_dic에 저장
+            answer_dic[idx] = updated_answer
+        
+        print(answer_dic)
+        print("프로그램 추천 모델링을 위한 입력값 :", modeling_answers)
+        print("해당하는 프로그램 위치값을 위한 입력값 :", cosine_answers)
+        modeling_input = ' '.join(cosine_answers)
         recommendations_df = get_facility_info.recommend_programs(modeling_input, unique_program)
         
         # 프로그램 추천 정보를 채팅창에 추가
