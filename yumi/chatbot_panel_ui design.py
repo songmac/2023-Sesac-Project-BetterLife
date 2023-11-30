@@ -14,8 +14,11 @@ exercise_chatbot = ExerciseChatbot()
 question_text = pn.pane.Str()
 response_input = pn.widgets.TextInput(placeholder='입력해주세요')
 submit_button = pn.widgets.Button(name='입력')
-chat_history_panel = pn.pane.Str()
-recommendation_table = pn.widgets.DataFrame()
+chat_history_panel = pn.pane.Str(css_classes=['nanum-square'])
+recommendation_table = pn.widgets.DataFrame(css_classes=['nanum-square'])
+
+# 나눔 글꼴 경로
+nanum_font_path = 'C:/Users/aline/AppData/Local/Microsoft/Windows/Fonts/NanumSquare.ttf'
 
 question_text.styles = {
         'background-color': '#f9eb54',  # 질문 영역 배경색
@@ -24,24 +27,37 @@ question_text.styles = {
         'border-radius': '10px',
 }
 
-# 응답 입력창 스타일 설정
-response_input.styles = {
-    'background-color': '#FFFFFF',  # 입력창 배경색
-    'padding': '10px',
-    'margin': '5px',
-    'border-radius': '10px',
-    'box-shadow': '0 1px 4px rgba(0, 0, 0, 0.1)',
-}
+# # 응답 입력창 스타일 설정
+# response_input.styles = {
+#     'background-color': '#FFFFFF',  # 입력창 배경색
+#     'padding': '10px',
+#     'margin': '5px',
+#     'border-radius': '10px',
+#     'box-shadow': '0 1px 4px rgba(0, 0, 0, 0.1)',
+# }
 
 # 응답 버튼 스타일 설정
-submit_button.styles = {
-    'background-color': '#4285F4',  # 버튼 배경색
-    'padding': '10px',
-    'margin': '5px',
-    'cursor': 'pointer',
+# submit_button.styles = {
+#     'background-color': '#4285F4',  # 버튼 배경색
+#     'color': '#FFFFFF',  # 버튼 글자색
+#     'padding': '10px',
+#     'margin': '5px',
+#     'border-radius': '10px',
+#     'cursor': 'pointer',
+# }
+
+# Chatbot과 Me의 말에 대한 스타일 설정
+chatbot_style = {
+    'color': '#0c710c',  # chatbot이 말하는 내용의 글자색
 }
 
-excel_file_path = './data/langchain_facility_info.xlsx'
+me_style = {
+    'color': '#000080',  # me가 말하는 내용의 글자색
+}
+
+#chat_history_panel.styles = chatbot_style
+
+excel_file_path = './yumi/langchain_facility_info.xlsx'
 data = pd.read_excel(excel_file_path)
 #중복된 행은 삭제
 unique_program = data.drop_duplicates()
@@ -61,7 +77,14 @@ def submit_response(event):
     for entry in exercise_chatbot.chat_history:
         role = entry['role']
         message = entry['message']
-        chat_history += f"{role}: {message}\n"
+        # style = chatbot_style if role == 'chatbot' else me_style
+        # chat_history += f"<div class='{role}' style='{style}'>{role}: {message}</div>"
+        style = f"color: {chatbot_style['color']}" if role == 'chatbot' else f"color: {me_style['color']}"
+        chat_history += f"<div class='{role}' style='{style}'>{role}: {message}</div>"
+        print(f"Role: {role}")
+
+    # 결과를 저장할 데이터프레임 초기화
+    result_df = pd.DataFrame()
     
     # 사용자 응답을 이용하여 프로그램 정보 추천
     if exercise_chatbot.is_all_questions_answered():
@@ -77,9 +100,6 @@ def submit_response(event):
             # user_dic에 저장
             answer_dic[idx] = updated_answer
 
-        # 결과를 저장할 데이터프레임 초기화
-        result_df = pd.DataFrame()
-
         print("프로그램 추천 모델링을 위한 입력값 :", modeling_answers)
         print("해당하는 프로그램 위치값을 위한 입력값 :", cosine_answers)
 
@@ -92,22 +112,22 @@ def submit_response(event):
 
             # 전체 결과 데이터프레임에 추가
             result_df = pd.concat([result_df, recommendations_df])
-        
+
         # 프로그램 추천 정보를 채팅창에 추가
         if not result_df.empty:
-            chat_history += "<div style='background-color: #f9eb54;'>\n추천된 프로그램 정보:</div>"
-            recommendation_table.value = result_df[['시설명','종목명','프로그램명','연령','성별','장애','주간횟수','시간대','지번주소']]
+            chat_history += "<div style='{chatbot_style}'>\n추천된 프로그램 정보:</div>"
+            #chat_history += result_df.to_string(index=False)
+            recommendation_table.value = result_df[['시설명','종목명','프로그램명','연령','성별','장애','주간횟수','시간대','지번주소']].reset_index(drop=True)
 
     chat_history_panel.object = chat_history
-    response_input.styles = {'background-color': '#F9EB54', 'margin-top': '10px'}
 
-    if response:
-        chat_history_panel.styles = {
-            'background-color': '#E1E8ED',  # 히스토리 영역 배경색
-            'padding': '10px',
-            'margin': '5px',
-            'border-radius': '10px',
-        }
+    # if response:
+    #     chat_history_panel.styles = {
+    #         'background-color': '#E1E8ED',  # 히스토리 영역 배경색
+    #         'padding': '10px',
+    #         'margin': '5px',
+    #         'border-radius': '10px',
+    #     }
     response_input.styles = {'background-color': '#F9EB54', 'margin-top': '10px'}
 
 #버튼이 클릭되었을 때 호출

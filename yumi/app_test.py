@@ -1,10 +1,12 @@
 import warnings
 import streamlit as st
-import exercise_chatbot
+from ExerciseChatbot import ExerciseChatbot
 #python -m streamlit run ./yumi/app_test.py
 
 warnings.filterwarnings("ignore")
 chat_history = []
+
+exercise_chatbot = ExerciseChatbot()
 
 #Chatbot title
 st.title("CommunityFit Recommand ChatBot")
@@ -12,11 +14,11 @@ st.caption("사용자별 맞춤 공공시설 운동 프로그램 추천 ChatBot"
 #st.set_page_config(page_title="Exercise Chatbot", layout="wide")
 #st.title("취저   공공 운동프로그램 추천 챗봇")
 #사이드바
-with open("D:/2023-Sesac-Project-BeLife/ui/sidebar.md", "r", encoding='utf-8') as sidebar_file:
+with open("D:/2023-Sesac-Project-BetterLife/ui/sidebar.md", "r", encoding='utf-8') as sidebar_file:
     sidebar_content = sidebar_file.read()
     st.sidebar.markdown(sidebar_content)
 
-with open("D:/2023-Sesac-Project-BeLife/ui/styles.md", "r", encoding='utf-8') as styles_file:
+with open("D:/2023-Sesac-Project-BetterLife/ui/styles.md", "r", encoding='utf-8') as styles_file:
     styles_content = styles_file.read()
     print(styles_content)
 
@@ -27,6 +29,9 @@ INITIAL_MESSAGE = [
         "content": "안녕하세요! 저는 공공체육시설 운동 프로그램을 추천하는 ComFit이예요. 당신의 정보를 알기 위해 몇가지 질문을 할꺼예요. 해당하는 부분을 선택해 주시면 되요 지금부터 시작할께요🔍",
     },
 ]
+
+if "messages" not in st.session_state:
+    st.session_state["messages"] = INITIAL_MESSAGE.copy()
 
 # 사이드 바 표기
 st.sidebar.markdown(sidebar_content)
