@@ -35,8 +35,14 @@ def load_data_and_train_svd_model(file_path):
     end_time = time.time()
     elapsed_time = end_time - start_time
 
+    # RMSE와 MSE 값을 출력
     print("Grid Search 최적의 매개변수:", best_params)
+    print("RMSE: {:.4f}".format(grid_search.best_score['rmse']))
+    print("MSE: {:.4f}".format(grid_search.best_score['mae']))
     print("학습에 걸린 시간: {:.2f}초".format(elapsed_time))
+
+    # 학습 데이터셋 개수를 출력
+    print("학습 데이터셋 개수:", len(trainset.all_ratings()))
 
     return algo
 
@@ -111,7 +117,7 @@ def integrated_model_update_and_recommendation(num_users_to_generate, file_path,
 
 # 주요 실행 부분
 file_path = 'C:/Users/User/project/SESAC/2023-Sesac-Project-BeLife/data/exercise_reviews_dataset.csv'
-num_users_to_generate = 5
+num_users_to_generate = 1
 
 algo = load_data_and_train_svd_model(file_path)
 integrated_model_update_and_recommendation(num_users_to_generate, file_path, algo)
