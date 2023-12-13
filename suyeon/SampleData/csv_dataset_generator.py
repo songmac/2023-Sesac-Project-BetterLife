@@ -1,7 +1,7 @@
 import random
 import pandas as pd
 
-def generate_user_info_and_reviews(num_users=10000, min_reviews_per_user=1, max_reviews_per_user=5):
+def generate_user_info_and_reviews(num_users=220000, min_reviews_per_user=1, max_reviews_per_user=5):
 
     # 사용자 데이터를 담을 딕셔너리 초기화
     user_data = {
@@ -139,7 +139,7 @@ def generate_user_info_and_reviews(num_users=10000, min_reviews_per_user=1, max_
     return combined_reviews_df
 
 # 사용자 정보 및 운동 프로그램 리뷰 데이터 생성
-exercise_reviews_dataset = generate_user_info_and_reviews(num_users=10000, min_reviews_per_user=1, max_reviews_per_user=5)
+exercise_reviews_dataset = generate_user_info_and_reviews(num_users=220000, min_reviews_per_user=1, max_reviews_per_user=5)
 
 # 최종 데이터 출력
 print("최종 데이터:")
