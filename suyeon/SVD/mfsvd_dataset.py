@@ -3,7 +3,7 @@ import random
 
 # num_users : mfsvd_modeling의 num_users_to_generate와 일치하게 바꿔야 함
 
-def generate_user_info_and_reviews(start_user_id, num_users=5, min_reviews_per_user=1, max_reviews_per_user=5):
+def generate_user_info_and_reviews(start_user_id, num_users=1, min_reviews_per_user=1, max_reviews_per_user=5):
 
     # 사용자 데이터를 담을 딕셔너리 초기화
     user_data = {
