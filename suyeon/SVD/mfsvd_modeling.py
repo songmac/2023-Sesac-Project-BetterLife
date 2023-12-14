@@ -3,7 +3,6 @@ from surprise import Dataset, Reader, SVD
 from surprise.model_selection import GridSearchCV 
 import joblib
 import time
-import random
 from mfsvd_dataset import generate_user_info_and_reviews
 
 
@@ -42,7 +41,8 @@ def load_data_and_train_svd_model(file_path):
     print("학습에 걸린 시간: {:.2f}초".format(elapsed_time))
 
     # 학습 데이터셋 개수를 출력
-    print("학습 데이터셋 개수:", len(trainset.all_ratings()))
+    trainset_len = sum(1 for _ in trainset.all_ratings())
+    print("학습 데이터셋 개수:", trainset_len)
 
     return algo
 
