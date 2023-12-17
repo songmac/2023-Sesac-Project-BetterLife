@@ -12,3 +12,4 @@
 ## 2. DeepFM 모델링 코드 작성중
 - DeepFM 검증 필요
 - colab으로 테스트 진행중
+- vscode와 병행중
