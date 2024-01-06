@@ -1,4 +1,4 @@
-## 🍀COMMIT 규칙
+해## 🍀COMMIT 규칙
 #### ❗영어로만 작성
 #### ❗각자 branch에 업로드 하면, main(only)에서 approve 후 merge 가능
 #### 👀커밋 메세지 형식
@@ -38,4 +38,7 @@
   1) 파일 폴더명 : data/
   2) 파일 확장명 : *csv, *.xlsx, *.zip, *.exe
   3) 파일명 : .env, 나만의메모.txt
+
+
+
 
