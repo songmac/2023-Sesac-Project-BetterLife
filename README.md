@@ -1,4 +1,4 @@
-해## 🍀COMMIT 규칙
+## 🍀COMMIT 규칙
 #### ❗영어로만 작성
 #### ❗각자 branch에 업로드 하면, main(only)에서 approve 후 merge 가능
 #### 👀커밋 메세지 형식
